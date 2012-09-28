@@ -18,3 +18,23 @@ Third decides if comments should be stripped from class definitions (default: `t
 `CollectionLoader::addPath()` method, adds directory to loader from witch class/interface definitions will be read.
 
 `CollectionLoader::handler()` handles reading cache file, if cache file does not exists - will be build.
+
+## Notice
+
+In some cases, especialy when complex dependencies occour, due PHP error CollectionLoader should be supported by oridinary autoloading class.
+Eg.
+
+	namespace bar {
+        class Bar extends \foo\Foo {}
+    }
+
+    namespace foo {
+       class Foo implements \yada\Yada {}
+    }
+
+    namespace yada {
+       interface Yada {}
+    }
+
+This construction will throw error - PHP can not find \foo\Foo class.
+There are only two solutions - remove \yada\Yada dependency or use external autoloader.
