@@ -50,23 +50,18 @@ class CollectionLoader {
 	}
 
 	/**
-	 * Adds single path entry to loader
+	 * Adds single path entry to loader.
 	 *
 	 * @param string $path
 	 */
 	protected function addPathToList($path) {
-		$length = strlen($path);
-		if($length == 0 || $path[$length - 1] != '/') {
-			$path .= '/';
-		}
-
-		$this->paths[$path] = realpath($path);
+		$this->paths[$path] = realpath(rtrim('/', $path).'/');
 	}
 
 	/**
 	 * Collection loader handler
 	 * If cache file exists - loads it
-  * If not - gathers classes from added paths and merges them into one file
+	 * If not - gathers classes from added paths and merges them into one file
 	 */
 	public function handler() {
 		if(!$this->reload && is_file($this->cache)) {
